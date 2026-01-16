@@ -514,3 +514,24 @@ observer.observe(document.body, { attributes: true, attributeFilter: ["class"] }
 
 // Listen to system theme changes
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateFavicon);
+
+// --- LIVE LOCAL TIME ---
+function updateLocalTime() {
+  const timeElement = document.getElementById('local-time');
+  if (!timeElement) return;
+
+  const options = {
+    timeZone: 'Asia/Manila', // Sets the clock to your timezone
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  };
+
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  timeElement.textContent = formatter.format(new Date());
+}
+
+// Update every second
+setInterval(updateLocalTime, 30000);
+// Run immediately on load
+updateLocalTime();

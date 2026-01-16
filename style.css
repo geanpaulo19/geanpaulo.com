@@ -300,50 +300,70 @@ body.light-mode {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  /* Keep purple accent while adding liquid glass look */
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.25),
-      rgba(255, 255, 255, 0.08)
-    ),
-    var(--accent);
-
-  color: var(--bg);
-  padding: 0.35rem 0.9rem;
+  gap: 0.5rem;
+  height: 34px;
+  padding: 0 1.2rem;
   border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  height: 32px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
 
-  /* Liquid glass */
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 4px 12px rgba(0, 0, 0, 0.25);
+  /* Using your Liquid Glass variables */
+  background: var(--liquid-glass-bg), var(--accent);
+  backdrop-filter: var(--liquid-glass-backdrop);
+  -webkit-backdrop-filter: var(--liquid-glass-backdrop);
+  border: var(--liquid-glass-border);
+  box-shadow: var(--liquid-glass-box-shadow);
+  color: var(--bg); /* Dark text on light glass/accent */
+}
 
-  transition: all 0.3s ease;
+/* The "Shine" Overlay */
+.contact-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
 }
 
 .contact-btn:hover {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.45),
-      rgba(255, 255, 255, 0.15)
-    ),
-    var(--accent);
+  transform: translateY(-2px) scale(1.02);
+  background: var(--liquid-glass-hover-bg), var(--accent);
+  box-shadow: 
+    var(--liquid-glass-hover-box-shadow),
+    0 0 20px rgba(139, 139, 255, 0.3); /* Soft glow using accent color */
+}
 
-  transform: scale(1.05);
-  color: var(--bg);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 6px 16px rgba(0, 0, 0, 0.3);
+.contact-btn:hover::before {
+  left: 100%;
+}
+
+.contact-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Custom Green Liquid Glass for WhatsApp */
+.contact-btn[href*="wa.me"] {
+  --accent-green: #25d366;
+  background: var(--liquid-glass-bg), var(--accent-green);
+}
+
+.contact-btn[href*="wa.me"]:hover {
+  box-shadow: 
+    var(--liquid-glass-hover-box-shadow),
+    0 0 20px rgba(37, 211, 102, 0.3);
 }
 
 /* =========================
@@ -493,44 +513,75 @@ body.light-mode {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 
-  /* Subtle default background for inactive buttons */
+  /* Subtle inactive state */
   background: rgba(255, 255, 255, 0.03);
   color: var(--muted);
   border-radius: 999px;
-  padding: 0.3rem 0.8rem;
+  padding: 0.35rem 1rem;
   cursor: pointer;
   font-size: 0.85rem;
-  border: 1px solid rgba(255,255,255,0.2);
-
-  transition: all 0.3s ease;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Shared bouncy transition */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Shine effect for both inactive and active states */
+.project-filter button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+/* Hover & Active State */
 .project-filter button:hover,
 .project-filter button.active {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  /* Vibrant liquid glass for hover/active */
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.2)
-    ),
-    rgba(139, 139, 255, 1); /* accent purple */
-
+  /* Vibrant liquid glass background */
+  background: var(--liquid-glass-bg), rgba(139, 139, 255, 1);
   color: var(--bg);
   border-color: rgba(139, 139, 255, 1);
-  border-radius: 999px;
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 6px 16px rgba(0, 0, 0, 0.3);
+  
+  backdrop-filter: var(--liquid-glass-backdrop);
+  -webkit-backdrop-filter: var(--liquid-glass-backdrop);
+  box-shadow: 
+    var(--liquid-glass-box-shadow),
+    0 4px 15px rgba(139, 139, 255, 0.3);
 
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Trigger shine on hover */
+.project-filter button:hover::before {
+  left: 100%;
+}
+
+/* Tactile click feedback */
+.project-filter button:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* Ensure the active button still has the shine when initially viewed */
+.project-filter button.active::before {
+  animation: initialShine 1.5s ease-in-out forwards;
+}
+
+@keyframes initialShine {
+  from { left: -100%; }
+  to { left: 100%; }
 }
 
 /* =========================
@@ -1092,50 +1143,59 @@ body.light-mode .nav-logo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  /* Vibrant purple liquid glass like contact-btn */
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.35),
-      rgba(255, 255, 255, 0.12)
-    ),
-    var(--accent);
-
-  color: var(--bg);
-  padding: 0.6rem 1.2rem;
+  gap: 0.6rem;
+  padding: 0.6rem 1.4rem;
   border-radius: 999px;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  /* Physics-based transition */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  backdrop-filter: blur(10px) saturate(160%);
-  -webkit-backdrop-filter: blur(10px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 4px 12px rgba(0, 0, 0, 0.25);
+  /* Using the Liquid Glass Variables */
+  background: var(--liquid-glass-bg), var(--accent);
+  backdrop-filter: var(--liquid-glass-backdrop);
+  -webkit-backdrop-filter: var(--liquid-glass-backdrop);
+  border: var(--liquid-glass-border);
+  box-shadow: var(--liquid-glass-box-shadow);
+  color: var(--bg);
+}
 
-  transition: all 0.3s ease;
+/* The "Shine" Overlay (Matches Contact Buttons) */
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.6s;
 }
 
 .cta-btn:hover {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.2)
-    ),
-    var(--accent);
+  transform: translateY(-3px) scale(1.05);
+  background: var(--liquid-glass-hover-bg), var(--accent);
+  box-shadow: 
+    var(--liquid-glass-hover-box-shadow),
+    0 0 25px rgba(139, 139, 255, 0.4); /* Stronger glow for CTA */
+}
 
-  color: var(--bg);
-  border-color: var(--accent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 6px 16px rgba(0, 0, 0, 0.3);
+.cta-btn:hover::before {
+  left: 100%;
+}
 
-  transform: scale(1.05);
+.cta-btn:active {
+  transform: translateY(0) scale(0.97);
 }
 
 /* =========================
@@ -1648,48 +1708,133 @@ body:not(.light-mode) .modal-header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-left: 0.3rem;        /* tiny spacing from the sentence */
-  padding: 0.25rem 0.7rem;    /* slightly bigger for liquid glass feel */
-  font-size: 0.75rem;         /* slightly bigger text for readability */
+  margin-left: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  color: var(--accent);
-
-  /* Muted purple background with subtle liquid glass effect */
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0.02)
-    ),
-    rgba(139, 139, 255, 0.15);   /* muted purple */
-
-  border-radius: 999px;        /* pill shape */
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 2px 6px rgba(0, 0, 0, 0.12);
-
+  color: var(--accent); /* Keeps your original text color */
+  
+  /* Pill shape and base glass styles */
+  border-radius: 999px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  /* Modern Liquid Glass Variable Integration */
+  background: var(--liquid-glass-bg), rgba(139, 139, 255, 0.15);
+  backdrop-filter: var(--liquid-glass-backdrop);
+  -webkit-backdrop-filter: var(--liquid-glass-backdrop);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--liquid-glass-box-shadow);
+  
+  /* Bouncy physics transition */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* The Shine Overlay */
+.about-more::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: 0.6s;
 }
 
 .about-more:hover {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.15),
-      rgba(255, 255, 255, 0.05)
-    ),
-    rgba(139, 139, 255, 0.2);   /* slightly stronger muted purple on hover */
-
+  /* Keeps the original color scheme but adds the hover behavior */
+  background: var(--liquid-glass-hover-bg), rgba(139, 139, 255, 0.25);
   color: var(--accent);
-  border-color: rgba(139, 139, 255, 0.25);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.18);
+  border-color: rgba(139, 139, 255, 0.3);
+  
+  /* Visual lift and shine trigger */
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 
+    var(--liquid-glass-hover-box-shadow),
+    0 4px 12px rgba(139, 139, 255, 0.1);
+}
 
-  transform: scale(1.05);
+.about-more:hover::before {
+  left: 100%;
+}
+
+.about-more:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.status-divider {
+  opacity: 0.3;
+  margin: 0 4px;
+  font-weight: 300;
+}
+
+#local-time {
+  /* This prevents the pill from shaking when numbers change */
+  font-variant-numeric: tabular-nums; 
+  font-family: inherit;
+  min-width: 65px;
+}
+
+@media (max-width: 480px) {
+  .status-pill {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+  }
+  .status-divider {
+    margin: 0 2px;
+  }
+}
+
+/* =========================
+   BACKGROUND AURAS (MINIMALIST)
+========================= */
+.bg-aura {
+  position: fixed;
+  width: 90vw;
+  height: 90vw;
+  border-radius: 50%;
+  filter: blur(200px); 
+  z-index: -1;
+  
+  /* Reduced to 1.5% - just enough to break the flat black */
+  opacity: 0.015; 
+  
+  mix-blend-mode: screen; 
+  pointer-events: none;
+  animation: aura-float 60s infinite alternate ease-in-out;
+}
+
+.aura-1 {
+  background: var(--accent);
+  top: -35%; 
+  left: -25%;
+}
+
+.aura-2 {
+  background: #6366f1;
+  bottom: -35%;
+  right: -25%;
+  animation-duration: 80s; /* Almost static */
+}
+
+@media (max-width: 768px) {
+  .bg-aura {
+    width: 130vw;
+    height: 130vw;
+    /* 1% on mobile to prevent any muddying on small screens */
+    opacity: 0.01; 
+    filter: blur(150px);
+  }
+}
+
+@keyframes aura-float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(3%, 2%) scale(1.01); }
 }

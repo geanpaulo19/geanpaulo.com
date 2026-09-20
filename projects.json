@@ -14,6 +14,13 @@
     "tags": ["Web", "Business"]
   },
   {
+    "title": "Prominent Detailing",
+    "description": "A clean, contemporary web presence for Prominent Detailing, a mobile auto detailing service offering ceramic coatings, paint correction, and interior restoration.",
+    "url": "https://prominentdetailingllc.com",
+    "image": "assets/images/pd.png",
+    "tags": ["Web", "Business"]
+  },
+  {
     "title": "Gradient Generator",
     "description": "Easily create beautiful gradients with customizable colors. Users can export their designs for use in websites, graphics, and apps.",
     "url": "https://gradiently.netlify.app",
